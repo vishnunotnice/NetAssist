@@ -33,3 +33,10 @@ func TestConfigInitAndShow(t *testing.T) {
 		t.Fatalf("config output = %q", got)
 	}
 }
+
+func TestDiscoverUsesDefaultHostLimit(t *testing.T) {
+	got := runCommand(t, "discover", "192.168.10.0/30")
+	if !strings.Contains(got, "Planned 2 host(s)") {
+		t.Fatalf("discovery output = %q", got)
+	}
+}

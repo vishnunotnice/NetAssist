@@ -2,11 +2,13 @@
 
 NetAssist is a Go foundation for a self-hosted networking management platform. Its initial CLI provides version, local status, and configuration workflows while the architecture reserves clear ownership for agents, API services, discovery, diagnostics, monitoring, SIEM, and a future networking engine.
 
-## Phase 1 scope
+## Current scope
 
 - Cobra CLI: `netassist version`, `netassist status`, `netassist config init`, and `netassist config show`.
 - YAML configuration with JSON-oriented structured logging defaults.
-- Module seams with no active network scans, device collection, security detection, or traffic tunneling.
+- Explicit-target DNS resolution and TCP connectivity diagnostics.
+- Bounded local IPv4 discovery planning: it validates a private, loopback, or link-local CIDR and lists eligible hosts without probing them.
+- Module seams with no active discovery probes, device collection, security detection, or traffic tunneling.
 - SIEM model boundary for normalized event intake and storage.
 
 ## Local use
@@ -15,6 +17,9 @@ NetAssist is a Go foundation for a self-hosted networking management platform. I
 go run ./cmd/netassist version
 go run ./cmd/netassist config init
 go run ./cmd/netassist status
+go run ./cmd/netassist diagnose dns example.com
+go run ./cmd/netassist diagnose tcp localhost:443
+go run ./cmd/netassist discover 192.168.1.0/24
 go test ./...
 ```
 
