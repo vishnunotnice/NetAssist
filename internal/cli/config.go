@@ -36,6 +36,13 @@ func defaultConfigPath() string {
 	return "config.yaml"
 }
 
+func defaultDataPath(filename string) string {
+	if path, err := os.UserConfigDir(); err == nil {
+		return filepath.Join(path, applicationName, filename)
+	}
+	return filename
+}
+
 func defaultConfig() Config {
 	return Config{Log: LogConfig{Level: "info", Format: "json"}, SIEM: SIEMConfig{Enabled: false}}
 }

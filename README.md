@@ -8,6 +8,8 @@ NetAssist is a Go foundation for a self-hosted networking management platform. I
 - YAML configuration with JSON-oriented structured logging defaults.
 - Explicit-target DNS resolution and TCP connectivity diagnostics.
 - Bounded local IPv4 discovery planning: it validates a private, loopback, or link-local CIDR and lists eligible hosts without probing them.
+- Local device inventory and on-demand TCP health-check history.
+- A local, append-only SIEM event prototype for manually ingested normalized events.
 - Module seams with no active discovery probes, device collection, security detection, or traffic tunneling.
 - SIEM model boundary for normalized event intake and storage.
 
@@ -20,6 +22,9 @@ go run ./cmd/netassist status
 go run ./cmd/netassist diagnose dns example.com
 go run ./cmd/netassist diagnose tcp localhost:443
 go run ./cmd/netassist discover 192.168.1.0/24
+go run ./cmd/netassist devices add router --address 192.168.1.1 --tags network,core
+go run ./cmd/netassist monitor tcp localhost:443
+go run ./cmd/netassist siem ingest --source cli --kind audit --severity info --message "configuration initialized"
 go test ./...
 ```
 
@@ -30,6 +35,7 @@ go test ./...
 | `internal/cli` | User-facing command interface and local configuration |
 | `internal/agent` | Future cross-platform device enrollment and telemetry |
 | `internal/api` | Future control-plane transport |
+| `internal/devices` | Local device inventory, without credentials or connection secrets |
 | `internal/discovery` | Authorized asset discovery and enrichment |
 | `internal/diagnostics` | User-authorized troubleshooting checks |
 | `internal/monitoring` | Availability and performance measurement |

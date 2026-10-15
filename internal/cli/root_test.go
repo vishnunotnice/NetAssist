@@ -40,3 +40,19 @@ func TestDiscoverUsesDefaultHostLimit(t *testing.T) {
 		t.Fatalf("discovery output = %q", got)
 	}
 }
+
+func TestDeviceInventory(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "devices.json")
+	runCommand(t, "devices", "add", "router", "--address", "192.168.1.1", "--tags", "core", "--store", path)
+	if got := runCommand(t, "devices", "list", "--store", path); !strings.Contains(got, "router\t192.168.1.1\tcore") {
+		t.Fatalf("device output = %q", got)
+	}
+}
+
+func TestSIEMEventStore(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "events.jsonl")
+	runCommand(t, "siem", "ingest", "--source", "cli", "--kind", "audit", "--message", "test event", "--store", path)
+	if got := runCommand(t, "siem", "events", "--store", path); !strings.Contains(got, "test event") {
+		t.Fatalf("SIEM output = %q", got)
+	}
+}

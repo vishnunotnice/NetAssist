@@ -21,7 +21,7 @@ func NewRootCommand() *cobra.Command {
 		Long:         "NetAssist is a foundation for network management, diagnostics, monitoring, and security event operations.",
 		SilenceUsage: true,
 	}
-	cmd.AddCommand(newVersionCommand(), newStatusCommand(), newConfigCommand(), newDiagnosticsCommand(), newDiscoverCommand())
+	cmd.AddCommand(newVersionCommand(), newStatusCommand(), newConfigCommand(), newDiagnosticsCommand(), newDiscoverCommand(), newDevicesCommand(), newMonitorCommand(), newSIEMCommand())
 	return cmd
 }
 
